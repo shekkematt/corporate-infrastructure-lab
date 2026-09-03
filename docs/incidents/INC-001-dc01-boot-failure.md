@@ -41,38 +41,41 @@ Get-VHD
 Get-VMHardDiskDrive
 Get-VMSnapshot
 Get-ChildItem
+```
 
 No ambiente de recuperação também foram utilizados:
 
+```text
 diskpart
 list disk
 list volume
+```
 
 ## Constatações
 
-O primeiro arquivo DC01.vhdx encontrado possuía aproximadamente 36 MB físicos e apresentava os 80 GB virtuais totalmente não alocados.
+O primeiro arquivo `DC01.vhdx` encontrado possuía aproximadamente 36 MB físicos e apresentava os 80 GB virtuais totalmente não alocados.
 
 Nenhuma instalação válida do Windows Server estava presente naquele disco.
 
 Foi criado um novo disco virtual chamado:
 
-DC01-OS.vhdx
+`DC01-OS.vhdx`
 
 Após a reinstalação, foi identificado que o Hyper-V havia criado automaticamente um checkpoint.
 
-As alterações do sistema estavam sendo armazenadas em um arquivo diferencial .avhdx, enquanto o .vhdx permanecia como disco base.
+As alterações do sistema estavam sendo armazenadas em um arquivo diferencial `.avhdx`, enquanto o `.vhdx` permanecia como disco base.
 
 ## Resolução
 
 O checkpoint automático foi removido corretamente através do Hyper-V.
 
-O Hyper-V realizou a mesclagem do arquivo .avhdx com o disco base DC01-OS.vhdx.
+O Hyper-V realizou a mesclagem do arquivo `.avhdx` com o disco base `DC01-OS.vhdx`.
 
 Após a mesclagem:
 
-O AVHDX deixou de existir.
-O DC01 passou a apontar diretamente para DC01-OS.vhdx.
-O VHDX passou a possuir aproximadamente 15 GB de dados.
-O Windows Server voltou a inicializar normalmente.
-Os checkpoints automáticos foram desabilitados.
-Foi criado manualmente o checkpoint BASE-WINDOWS-NETWORK.
+- O AVHDX deixou de existir.
+- O DC01 passou a apontar diretamente para `DC01-OS.vhdx`.
+- O VHDX passou a possuir aproximadamente 15 GB de dados.
+- O Windows Server voltou a inicializar normalmente.
+- Os checkpoints automáticos foram desabilitados.
+- Foi criado manualmente o checkpoint `BASE-WINDOWS-NETWORK`.
