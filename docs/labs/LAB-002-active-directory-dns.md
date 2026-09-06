@@ -2,110 +2,42 @@
 
 ## Objetivo
 
-Implementar uma infraestrutura básica de identidade corporativa utilizando Active Directory Domain Services (AD DS) e DNS no Windows Server 2025.
-
-O servidor DC01 será promovido a Domain Controller e será responsável inicialmente pela autenticação, gerenciamento de identidades e resolução de nomes do ambiente JG-LAB.
+Implantar o primeiro Domain Controller do ambiente JG-LAB utilizando Active Directory Domain Services e DNS.
 
 ## Ambiente
 
-### Servidor
+- Servidor: DC01
+- Sistema operacional: Windows Server 2025
+- IP: `10.10.10.10/24`
+- Domínio: `jglab.test`
+- NetBIOS: `JGLAB`
+- Forest Functional Level: Windows Server 2025
+- Domain Functional Level: Windows Server 2025
 
-- Hostname: DC01
-- Sistema operacional: Windows Server 2025 Standard Evaluation
-- IP: 10.10.10.10/24
-- Hypervisor: Microsoft Hyper-V
-- Rede virtual: JG-LAB
+## Implementação
 
-### Rede
+- Active Directory Domain Services instalado
+- DC01 promovido a Domain Controller
+- Nova floresta criada: `jglab.test`
+- DNS Server instalado e integrado ao Active Directory
+- Global Catalog habilitado
+- Resolução direta validada
+- Registros SRV do Active Directory validados
+- Reverse Lookup Zone criada para `10.10.10.0/24`
+- Registro PTR do DC01 criado
+- Estrutura inicial de OUs criada
+- Primeiro usuário de domínio criado
 
-- Rede: 10.10.10.0/24
-- DC01: 10.10.10.10
-- Host Hyper-V: 10.10.10.1
+## Estrutura do Active Directory
 
-## Tecnologias
-
-- Active Directory Domain Services (AD DS)
-- Domain Controller (DC)
-- DNS Server
-- Group Policy
-- PowerShell
-- Windows Server 2025
-
-## Atividades planejadas
-
-- [ ] Instalar a função Active Directory Domain Services
-- [ ] Instalar/configurar DNS Server
-- [ ] Criar uma nova floresta e domínio
-- [ ] Promover DC01 a Domain Controller
-- [ ] Validar funcionamento do DNS
-- [ ] Criar estrutura de Organizational Units (OUs)
-- [ ] Criar usuários de laboratório
-- [ ] Criar grupos de segurança
-- [ ] Organizar usuários por departamentos
-- [ ] Criar primeira Group Policy (GPO)
-- [ ] Criar futura máquina CLIENT01
-- [ ] Ingressar CLIENT01 no domínio
-- [ ] Testar autenticação com usuário do domínio
-
-## Conceitos estudados
-
-### Active Directory
-
-Serviço de diretório utilizado para centralizar usuários, computadores, grupos, autenticação e políticas de um ambiente Windows corporativo.
-
-### Domain Controller
-
-Servidor que executa os serviços do Active Directory e atende solicitações relacionadas ao domínio.
-
-### DNS
-
-Serviço responsável pela resolução de nomes para endereços IP.
-
-No Active Directory, o DNS também é utilizado pelos computadores para localizar Domain Controllers e outros serviços do domínio.
-
-### GPO
-
-Group Policy Object.
-
-Permite aplicar configurações e políticas de forma centralizada a usuários e computadores pertencentes ao domínio.
-
-### OU
-
-Organizational Unit.
-
-Estrutura lógica utilizada dentro do Active Directory para organizar objetos como usuários, computadores e grupos.
-
-## Arquitetura planejada
-
-GODOFWAR (HOST)
-10.10.10.1
-    |
-    |
-    | JG-LAB
-    |
-    +--- DC01
-         10.10.10.10
-         |
-         +--- AD DS
-         +--- DNS
-
-Futuramente:
-
-    +--- CLIENT01
-    +--- FS01
-
-## Checkpoint
-
-Antes da implementação do Active Directory foi criado o checkpoint:
-
-`BASE-WINDOWS-NETWORK`
-
-Esse checkpoint representa o estado funcional do Windows Server antes da instalação do AD DS e DNS.
-
-## Resultado
-
-Em andamento.
-
-## Status
-
-Em andamento.
+```text
+jglab.test
+└── JG-LAB
+    ├── Users
+    │   ├── TI
+    │   ├── Financeiro
+    │   ├── RH
+    │   └── Comercial
+    ├── Computers
+    ├── Groups
+    └── Servers
